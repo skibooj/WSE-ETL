@@ -4,4 +4,4 @@ final de-zoomcamp project
 
 ### diagram
 
-![picture](Untitled Diagram.drawio.png)
+![abs](https://github.com/skibooj/de_zoomcamp_project/blob/main/Untitled%20Diagram.drawio.png?raw=true)
