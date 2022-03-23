@@ -1,2 +1,4 @@
 /terraform/.terraform
 /airflow/logs
+/airflow/dags/__pycache__
+.ipynb_checkpoints

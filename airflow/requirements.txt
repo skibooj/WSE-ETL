@@ -1,2 +1,7 @@
+requests
+xlrd
+openpyxl
+pyarrow
 apache-airflow-providers-google
 pyarrow
+
