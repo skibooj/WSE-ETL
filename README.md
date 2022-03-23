@@ -4,7 +4,7 @@
 
 
 ### architecture diagram 
-![abs](https://github.com/skibooj/de_zoomcamp_project/blob/main/Untitled%20Diagram.drawio.png?raw=true)
+![](docs/diagram.png)
 ### Project setup 
 The file [instruction.md](https://github.com/skibooj/de_zoomcamp_project/blob/main/instruction.md) contains instructions for configuring the project.
 
