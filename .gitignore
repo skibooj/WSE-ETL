@@ -2,11 +2,7 @@
 /terraform/*.tfstate
 /terraform/*.lock.hcl
 /airflow/logs
-/airflow/dags/__pycache__
-.ipynb_checkpoints
+**/__pycache__
+**.ipynb_checkpoints
 
 
-dags/__pycache__
-.env
-
-*.ipynb
