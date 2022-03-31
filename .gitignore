@@ -1,0 +1,9 @@
+/terraform/.terraform
+/terraform/*.tfstate
+/terraform/*.lock.hcl
+/airflow/logs
+**/__pycache__
+**.ipynb_checkpoints
+**/.tfstate.backup
+**.ipynb
+**/.env
