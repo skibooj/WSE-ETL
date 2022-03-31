@@ -1,5 +1,2 @@
-requests
-xlrd
-openpyxl
-apache-airflow-providers-google
+apache-airflow-providers-google==6.6.0
 
