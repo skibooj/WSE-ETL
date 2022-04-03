@@ -1,9 +1,12 @@
+
 locals {
   data_lake_bucket = "data_lake"
 }
 
 variable "project" {
   description = "Your GCP Project ID"
+  type = string
+  default = "wse-data-345914"
 }
 
 
@@ -16,6 +19,13 @@ variable "region" {
 variable "zone" {
   default = "europe-west6-b"
   type = string
+  
+}
+
+variable "credentials" {
+  description = "path to credentionals"
+  type = string
+  default = "/.google/credentionals/google_credentials.json"
   
 }
 

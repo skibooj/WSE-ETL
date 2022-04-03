@@ -11,7 +11,7 @@ terraform {
 provider "google" {
   project = var.project
   region = var.region
-  // credentials = file(var.credentials)  # Use this if you do not want to set env-var GOOGLE_APPLICATION_CREDENTIALS
+  #credentials = file(var.credentials)  # Use this if you do not want to set env-var GOOGLE_APPLICATION_CREDENTIALS
 }
 
 # Data Lake Bucket
@@ -41,7 +41,7 @@ resource "google_bigquery_dataset" "dataset" {
 
 
 resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
+  name         = "wse-vm"
   machine_type = "f1-micro"
   zone = var.zone
 
