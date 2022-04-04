@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+    - name: staging
+      database: wse-data-345914
+      schema: wse_data_all
+      
+      tables:
+          - name:  wse_shares_external_table
