@@ -12,7 +12,7 @@ wse_project:
       timeout_seconds: 300
       type: bigquery
     prod:
-      dataset: wse_data_all
+      dataset: wse_prod
       fixed_retries: 1
       keyfile: /.google/credentials/google_credentials.json
       location: europe-west6
