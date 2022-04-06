@@ -1,4 +1,4 @@
-# Warsaw Stock Exchange (GPW) data pipline
+# Warsaw Stock Exchange (GPW) data pipeline
 
 ### project description
 
