@@ -45,7 +45,7 @@ gcloud auth application-default login
 - Click `add key` and `Create new key`
 - choose JSON key type and dowload 
 
-####  **6. move GCP key to `/.google/credentials/google_credentials.json`**
+####  **6. move GCP key to `~/.google/credentials/google_credentials.json`**
 
 At the location where the key was downloaded, follow the steps below:
 
@@ -64,7 +64,7 @@ gcloud auth application-default login
 - https://console.cloud.google.com/apis/library/iamcredentials.googleapis.com
 - https://console.cloud.google.com/apis/library/compute.googleapis.com
 ```bash
-gcloud services enable compute.googleapis.com`
+gcloud services enable compute.googleapis.com
 ```
 
 ####  **9. setup GCP infrastructure with Terraform**
@@ -80,7 +80,6 @@ terraform apply
 now you should have:
 - one bucket
 - one dataset in BQ
-- one instance of VM
 
 ####  **10. create ssh connection to VM**
 
@@ -96,14 +95,18 @@ ssh-keygen -t rsa -f gpc -C <yourname> -b 2048
 - copy entire content of gcp.pub file to opened tab in GCP in SSH KEY 1 field and next click SAVE on the bottom 
 
 ####   **11. create VM instance** 
-- Go to Compute Engine > VM instances and click create instance
+
+Go to Compute Engine > VM instances and click `create instance`
 - select name
 - select the same region as in previous configurations
 - series: E2
 - Machine type: e2-medium
-- In Boot disk section click change and select:
+
+In Boot disk section click change and select:
 - Operating system: Ubuntu
-- Version: 20.04 LTS and now click CREATE
+- Version: 20.04 LTS
+
+click `CREATE`
 
 ####   **12. config SSH**
 
