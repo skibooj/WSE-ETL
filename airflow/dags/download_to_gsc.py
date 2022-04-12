@@ -5,8 +5,6 @@ import pandas as pd
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
-
 from google.cloud import storage
 
 
@@ -16,7 +14,7 @@ def gpw_download(date, security_type, path_template) -> None:
     url_params = {"fetch": "1", "type": security_type, "date": date}
 
     resp = requests.get(base_url, params=url_params, verify=False)
-    Path(path_template).parents[0].mkdir(parents=True, exist_ok=True)
+    # Path(path_template).parents[0].mkdir(parents=True, exist_ok=True)
 
     with Path(path_template).open(mode="wb") as output:
         output.write(resp.content)
@@ -34,6 +32,14 @@ def upload_to_gcs(bucket, object_name, local_file):
     blob.upload_from_filename(local_file)
 
 
+def delete_file_locally(path_to_delete):
+    try:
+        for file in path_to_delete:
+            os.unlink(file)
+    except:
+        print("error")
+
+
 def download_parquetize_upload_dag(
     dag,
     date_to_download,
@@ -42,6 +48,7 @@ def download_parquetize_upload_dag(
     download_path,
     parquet_path,
     gsc_path,
+    files_to_delete,
 ):
 
     with dag:
@@ -71,7 +78,13 @@ def download_parquetize_upload_dag(
             },
         )
 
-        dowload_data_wse_task >> format_to_parquet_task >> local_to_gcs_task
+        delete_files_task = PythonOperator(
+            task_id="delete_files_task",
+            python_callable=delete_file_locally,
+            op_kwargs={"path_to_delete": files_to_delete},
+        )
+
+    dowload_data_wse_task >> format_to_parquet_task >> local_to_gcs_task >> delete_files_task
 
 
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
@@ -79,13 +92,11 @@ BUCKET = os.environ.get("GCP_GCS_BUCKET")
 TODAY_DATE = "{{ execution_date.strftime('%d-%m-%Y') }}"
 SEC_TYPE = "10"
 PATH_TO_LOCAL_HOME = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
-# change this path to temp
-# t = tempfile.NamedTemporaryFile(dir="/Users/rafal")
-
 PATH_TEMPLATE_DOWNLOAD = f"{PATH_TO_LOCAL_HOME}/{TODAY_DATE}.xls"
-# change this path to temp
 PATH_TEMPLATE_PARQUET = f"{PATH_TO_LOCAL_HOME}/{TODAY_DATE}.parquet"
 PATH_TEMPLATE_GSC = f"stock/wse/shares/{{{{ execution_date.strftime('%Y') }}}}/{{{{ execution_date.strftime('%m') }}}}/wse_shares_{TODAY_DATE}.parquet"
+FILES = [PATH_TEMPLATE_DOWNLOAD, PATH_TEMPLATE_PARQUET]
+
 
 default_args = {
     "owner": "airflow",
@@ -112,4 +123,5 @@ download_parquetize_upload_dag(
     download_path=PATH_TEMPLATE_DOWNLOAD,
     parquet_path=PATH_TEMPLATE_PARQUET,
     gsc_path=PATH_TEMPLATE_GSC,
+    files_to_delete=FILES,
 )
